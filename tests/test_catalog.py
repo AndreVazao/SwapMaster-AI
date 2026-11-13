@@ -1,6 +1,7 @@
 import pytest
 
 from swapmaster.domain.catalog import (
+    assess_interface_compatibility,
     InterfaceKind,
     InterfaceStatus,
     MechanicalInterface,
@@ -9,7 +10,6 @@ from swapmaster.domain.catalog import (
     PropulsionType,
     Transmission,
     VehiclePlatform,
-    assess_interface_compatibility,
 )
 from swapmaster.domain.evidence import Evidence, EvidenceLevel
 
