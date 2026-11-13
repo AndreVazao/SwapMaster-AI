@@ -8,7 +8,9 @@ This roadmap is directional. An item is complete only when code, tests, document
 - [x] Metric 3D envelope model
 - [x] Conservative preliminary envelope assessment
 - [x] Hosted CI on Windows and Linux
-- [ ] Data model for vehicles, engines, gearboxes and interfaces
+- [x] Initial typed records for vehicle platforms, power units, transmissions, mounting points and interfaces
+- [x] Conservative interface-identity assessment
+- [ ] Per-field provenance, uncertainty and revision history
 - [ ] Versioned local database and import validation
 
 ## Engineering workflows

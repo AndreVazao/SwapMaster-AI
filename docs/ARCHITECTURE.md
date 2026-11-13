@@ -1,14 +1,24 @@
 # Architecture baseline
 
-## Current increment
-
-The first implementation increment is deliberately small and deterministic:
+## Implemented domain increments
 
 - `domain/evidence.py`: provenance and confidence level for engineering inputs.
 - `domain/dimensions.py`: validated axis-aligned metric envelope.
 - `domain/fitment.py`: conservative bounding-box comparison.
+- `domain/catalog.py`: immutable records for vehicle platforms, propulsion units, transmissions, mounting points and named interfaces; deterministic interface-identity assessment.
 
 The domain layer has no GUI, network, database, CAD, or AI dependency. This keeps core rules independently testable.
+
+## Units and coordinate conventions
+
+- Envelope and mounting-point dimensions are expressed in millimetres.
+- Mass is kilograms, power is kilowatts, and torque is newton-metres.
+- Mounting-point coordinates must name their coordinate frame. Transformations between frames are not yet implemented.
+- Catalogue records carry an evidence record. At this stage, evidence applies to the record as a whole; finer per-field provenance and revision history are required before production catalogue ingestion.
+
+## Interface assessment limits
+
+A matching interface kind and identifier is only a preliminary identity match. It does not establish dimensional interchangeability, tolerances, bolt pattern, material suitability, load capacity, fastener specification, alignment, or safety. A positive result must never be treated as a fitment approval.
 
 ## Planned boundaries
 
@@ -21,7 +31,7 @@ Dependencies should point inward. Domain logic must not import UI or provider SD
 
 ## Data provenance
 
-Every engineering datum should carry units, source, acquisition method, timestamp, author/device where appropriate, evidence level, and revision. Conflicting sources must remain visible rather than silently overwritten.
+Every engineering datum should ultimately carry units, source, acquisition method, timestamp, author/device where appropriate, evidence level, uncertainty and revision. Conflicting sources must remain visible rather than silently overwritten.
 
 ## AI governance
 
@@ -29,4 +39,4 @@ AI can propose research, data changes, calculations to review, or code changes. 
 
 ## CAD and scanning roadmap
 
-3D scanning and CAD generation are not implemented in this increment. Future work must preserve coordinate systems, scale calibration, reference points, uncertainty, source meshes, and review history. Generated parts must be marked NOT FOR MANUFACTURE until independent engineering validation.
+3D scanning and CAD generation are not implemented. Future work must preserve coordinate systems, scale calibration, reference points, uncertainty, source meshes, and review history. Generated parts must be marked NOT FOR MANUFACTURE until independent engineering validation.
