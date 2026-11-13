@@ -53,7 +53,8 @@ def test_matching_confirmed_interfaces_are_only_a_preliminary_match() -> None:
 def test_matching_estimated_interfaces_require_review() -> None:
     left = MechanicalInterface(InterfaceKind.ENGINE_MOUNT, "mount-42", ESTIMATED)
     right = MechanicalInterface(InterfaceKind.ENGINE_MOUNT, "mount-42", CONFIRMED)
-    assert assess_interface_compatibility(left, right).status is InterfaceStatus.MATCH_REQUIRES_REVIEW
+    result = assess_interface_compatibility(left, right)
+    assert result.status is InterfaceStatus.MATCH_REQUIRES_REVIEW
 
 
 def test_different_interface_ids_are_incompatible() -> None:
