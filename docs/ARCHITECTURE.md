@@ -7,8 +7,9 @@
 - `domain/fitment.py`: conservative bounding-box comparison.
 - `domain/catalog.py`: immutable records for vehicle platforms, propulsion units, transmissions, mounting points and named interfaces; deterministic interface-identity assessment.
 - `domain/measurement.py`: field-level values with explicit units, evidence, absolute uncertainty and immutable revision history; required-data readiness gate.
+- `infrastructure/persistence/sqlite.py`: SQLite schema migration v1 and append-only measurement repository.
 
-The domain layer has no GUI, network, database, CAD, or AI dependency. This keeps core rules independently testable.
+The domain layer has no GUI, network, database, CAD, or AI dependency. Infrastructure adapts persistence to domain records.
 
 ## Units and coordinate conventions
 
@@ -23,6 +24,10 @@ The domain layer has no GUI, network, database, CAD, or AI dependency. This keep
 Each datum stores a field path, numeric value (or explicit unknown), unit, evidence level, uncertainty, revision, timestamp and optional operator/source reference. Histories are immutable, contiguous and unit-consistent. Corrections append a new revision rather than overwriting prior evidence. Unit changes require an explicit migration.
 
 The required-data gate returns blocked when a required value is absent, review-required when evidence is estimated/documented or uncertainty is unstated, and ready-for-engineering-review only when all required values are confirmed with uncertainty. The last state is not a fitment or safety approval.
+
+## Persistence boundary
+
+SQLite is the initial local persistence adapter. Schema migrations are versioned through `PRAGMA user_version` and recorded in `schema_migrations`. Measurement revisions use a composite primary key and are inserted in an explicit immediate transaction. The repository rejects revision overwrites and gaps. This is a local single-process persistence foundation, not yet a synchronized multi-user database or a full audit/event system.
 
 ## Interface assessment limits
 

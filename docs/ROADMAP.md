@@ -13,8 +13,10 @@ This roadmap is directional. An item is complete only when code, tests, document
 - [x] Field-level measurement records with explicit units and uncertainty
 - [x] Immutable, contiguous measurement revision history
 - [x] Required-data readiness gate
+- [x] SQLite schema migration v1 and append-only measurement repository
 - [ ] Per-field source conflict resolution and audit events
-- [ ] Versioned local database and import validation
+- [ ] Database backup, restore and encryption-at-rest strategy
+- [ ] Validated import/export format
 
 ## Engineering workflows
 - [ ] Vehicle and powertrain catalogue with source traceability
