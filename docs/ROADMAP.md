@@ -10,7 +10,10 @@ This roadmap is directional. An item is complete only when code, tests, document
 - [x] Hosted CI on Windows and Linux
 - [x] Initial typed records for vehicle platforms, power units, transmissions, mounting points and interfaces
 - [x] Conservative interface-identity assessment
-- [ ] Per-field provenance, uncertainty and revision history
+- [x] Field-level measurement records with explicit units and uncertainty
+- [x] Immutable, contiguous measurement revision history
+- [x] Required-data readiness gate
+- [ ] Per-field source conflict resolution and audit events
 - [ ] Versioned local database and import validation
 
 ## Engineering workflows

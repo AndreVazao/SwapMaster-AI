@@ -15,8 +15,19 @@ from swapmaster.domain.catalog import (
 from swapmaster.domain.dimensions import Envelope3D
 from swapmaster.domain.evidence import Evidence, EvidenceLevel
 from swapmaster.domain.fitment import FitmentAssessment, FitmentStatus, assess_envelope
+from swapmaster.domain.measurement import (
+    DataReadiness,
+    DataReadinessAssessment,
+    EngineeringDatum,
+    MeasurementHistory,
+    MeasurementUnit,
+    assess_required_measurements,
+)
 
 __all__ = [
+    "DataReadiness",
+    "DataReadinessAssessment",
+    "EngineeringDatum",
     "Envelope3D",
     "Evidence",
     "EvidenceLevel",
@@ -25,6 +36,8 @@ __all__ = [
     "InterfaceAssessment",
     "InterfaceKind",
     "InterfaceStatus",
+    "MeasurementHistory",
+    "MeasurementUnit",
     "MechanicalInterface",
     "MountingPoint",
     "PowerUnit",
@@ -32,5 +45,6 @@ __all__ = [
     "Transmission",
     "VehiclePlatform",
     "assess_envelope",
+    "assess_required_measurements",
     "assess_interface_compatibility",
 ]

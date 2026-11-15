@@ -6,6 +6,7 @@
 - `domain/dimensions.py`: validated axis-aligned metric envelope.
 - `domain/fitment.py`: conservative bounding-box comparison.
 - `domain/catalog.py`: immutable records for vehicle platforms, propulsion units, transmissions, mounting points and named interfaces; deterministic interface-identity assessment.
+- `domain/measurement.py`: field-level values with explicit units, evidence, absolute uncertainty and immutable revision history; required-data readiness gate.
 
 The domain layer has no GUI, network, database, CAD, or AI dependency. This keeps core rules independently testable.
 
@@ -13,8 +14,15 @@ The domain layer has no GUI, network, database, CAD, or AI dependency. This keep
 
 - Envelope and mounting-point dimensions are expressed in millimetres.
 - Mass is kilograms, power is kilowatts, and torque is newton-metres.
+- Measurement units are explicit and never silently converted.
 - Mounting-point coordinates must name their coordinate frame. Transformations between frames are not yet implemented.
-- Catalogue records carry an evidence record. At this stage, evidence applies to the record as a whole; finer per-field provenance and revision history are required before production catalogue ingestion.
+- Catalogue-level evidence is retained for backward compatibility; new measurement workflows should use field-level `EngineeringDatum` records.
+
+## Measurement provenance and revision history
+
+Each datum stores a field path, numeric value (or explicit unknown), unit, evidence level, uncertainty, revision, timestamp and optional operator/source reference. Histories are immutable, contiguous and unit-consistent. Corrections append a new revision rather than overwriting prior evidence. Unit changes require an explicit migration.
+
+The required-data gate returns blocked when a required value is absent, review-required when evidence is estimated/documented or uncertainty is unstated, and ready-for-engineering-review only when all required values are confirmed with uncertainty. The last state is not a fitment or safety approval.
 
 ## Interface assessment limits
 
