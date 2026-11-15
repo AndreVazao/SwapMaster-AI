@@ -111,7 +111,7 @@ def test_append_rejects_wrong_revision_or_field() -> None:
 def test_missing_required_measurement_blocks_readiness() -> None:
     history = MeasurementHistory(
         "vehicle.engine_bay.length",
-        (datum(None, evidence=UNKNOWN, uncertainty=None),),
+        (datum(200.0),),
     )
     result = assess_required_measurements(
         {"vehicle.engine_bay.length": history},
