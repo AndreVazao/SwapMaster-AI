@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import sqlite3
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 
 from swapmaster.domain.evidence import Evidence, EvidenceLevel
@@ -117,7 +117,7 @@ class SQLiteDatabase:
         )
         connection.execute(
             "INSERT INTO schema_migrations (version, applied_at) VALUES (?, ?)",
-            (1, datetime.now(timezone.utc).isoformat()),
+            (1, datetime.now(UTC).isoformat()),
         )
         connection.execute("PRAGMA user_version = 1")
 
