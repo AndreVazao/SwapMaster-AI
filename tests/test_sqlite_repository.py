@@ -102,7 +102,7 @@ def test_repository_rejects_unit_changes_and_reversed_timestamps() -> None:
             make_datum(
                 519.0,
                 revision=2,
-                recorded_at=datetime(2026, 11, 14, 12, 0, tzinfo=timezone.utc),
+                recorded_at=datetime(2026, 11, 14, 12, 0, tzinfo=UTC),
             )
         )
     database.close()
