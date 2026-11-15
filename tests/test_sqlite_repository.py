@@ -1,4 +1,4 @@
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 import sqlite3
 
 import pytest
@@ -32,7 +32,7 @@ def make_datum(
         evidence=evidence,
         uncertainty=uncertainty,
         revision=revision,
-        recorded_at=recorded_at or datetime(2026, 11, 15, 12, 0, tzinfo=timezone.utc),
+        recorded_at=recorded_at or datetime(2026, 11, 15, 12, 0, tzinfo=UTC),
         recorded_by="workshop-user",
         source_reference="report://measurement/123",
     )
