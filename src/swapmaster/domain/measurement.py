@@ -157,6 +157,7 @@ def assess_required_measurements(
         ):
             review.append(field_path)
 
+    reasons: tuple[str, ...]
     if missing:
         status = DataReadiness.BLOCKED
         reasons = ("Required engineering data is missing; positive assessment is blocked.",)
