@@ -13,7 +13,6 @@ from swapmaster.domain.catalog import (
 )
 from swapmaster.domain.evidence import Evidence, EvidenceLevel
 
-
 CONFIRMED = Evidence(EvidenceLevel.CONFIRMED, source="OEM service manual")
 ESTIMATED = Evidence(EvidenceLevel.ESTIMATED, method="visual estimate")
 
