@@ -1,5 +1,6 @@
 import pytest
 
+
 from swapmaster.domain.catalog import (
     InterfaceKind,
     InterfaceStatus,
