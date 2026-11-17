@@ -15,7 +15,8 @@ This roadmap is directional. An item is complete only when code, tests, document
 - [x] Required-data readiness gate
 - [x] SQLite schema migration v1 and append-only measurement repository
 - [ ] Per-field source conflict resolution and audit events
-- [ ] Database backup, restore and encryption-at-rest strategy
+- [x] SQLite online backup and validated atomic restore (local file workflow)
+- [ ] Encryption-at-rest strategy, backup scheduling, retention and off-site recovery
 - [ ] Validated import/export format
 
 ## Engineering workflows

@@ -2,7 +2,9 @@
 
 from __future__ import annotations
 
+import os
 import sqlite3
+import tempfile
 from datetime import UTC, datetime
 from pathlib import Path
 
@@ -120,6 +122,106 @@ class SQLiteDatabase:
             (1, datetime.now(UTC).isoformat()),
         )
         connection.execute("PRAGMA user_version = 1")
+
+
+    def backup_to(self, destination: str | Path) -> Path:
+        """Create a consistent, integrity-checked file backup using SQLite's backup API."""
+        destination_path = Path(destination).expanduser().resolve()
+        source_path = Path(self.path).expanduser().resolve() if self.path != ":memory:" else None
+        if source_path is not None and destination_path == source_path:
+            raise ValueError("Backup destination must differ from the live database.")
+        self._ensure_destination_offline(destination_path)
+        destination_path.parent.mkdir(parents=True, exist_ok=True)
+        temporary_path: Path | None = None
+        try:
+            with tempfile.NamedTemporaryFile(
+                prefix=f".{destination_path.name}.", suffix=".tmp",
+                dir=destination_path.parent, delete=False,
+            ) as temporary:
+                temporary_path = Path(temporary.name)
+            target = sqlite3.connect(temporary_path)
+            try:
+                self.connection.backup(target)
+                target.commit()
+                self._validate_database(target)
+            finally:
+                target.close()
+            os.replace(temporary_path, destination_path)
+            temporary_path = None
+            return destination_path
+        finally:
+            if temporary_path is not None:
+                temporary_path.unlink(missing_ok=True)
+
+    @classmethod
+    def restore_from(cls, backup_path: str | Path, destination: str | Path) -> Path:
+        """Atomically restore a validated backup; the destination must be offline."""
+        source_path = Path(backup_path).expanduser().resolve()
+        destination_path = Path(destination).expanduser().resolve()
+        if source_path == destination_path:
+            raise ValueError("Restore source and destination must differ.")
+        if not source_path.is_file():
+            raise FileNotFoundError(source_path)
+        cls._ensure_destination_offline(destination_path)
+        destination_path.parent.mkdir(parents=True, exist_ok=True)
+        temporary_path: Path | None = None
+        source_connection: sqlite3.Connection | None = None
+        try:
+            source_connection = sqlite3.connect(f"{source_path.as_uri()}?mode=ro", uri=True)
+            cls._validate_database(source_connection)
+            with tempfile.NamedTemporaryFile(
+                prefix=f".{destination_path.name}.", suffix=".restore",
+                dir=destination_path.parent, delete=False,
+            ) as temporary:
+                temporary_path = Path(temporary.name)
+            target = sqlite3.connect(temporary_path)
+            try:
+                source_connection.backup(target)
+                target.commit()
+                cls._validate_database(target)
+            finally:
+                target.close()
+            source_connection.close()
+            source_connection = None
+            os.replace(temporary_path, destination_path)
+            temporary_path = None
+            return destination_path
+        finally:
+            if source_connection is not None:
+                source_connection.close()
+            if temporary_path is not None:
+                temporary_path.unlink(missing_ok=True)
+
+    @staticmethod
+    def _ensure_destination_offline(destination: Path) -> None:
+        """Refuse replacement while SQLite WAL sidecars indicate active use."""
+        if Path(f"{destination}-wal").exists() or Path(f"{destination}-shm").exists():
+            raise RuntimeError(
+                "Destination has SQLite WAL sidecars; close all database users first."
+            )
+
+    @classmethod
+    def _validate_database(cls, connection: sqlite3.Connection) -> None:
+        """Reject corrupt, unversioned, newer, or migration-inconsistent database files."""
+        result = connection.execute("PRAGMA integrity_check").fetchone()
+        if result is None or str(result[0]).lower() != "ok":
+            raise sqlite3.DatabaseError("SQLite integrity_check failed.")
+        version_row = connection.execute("PRAGMA user_version").fetchone()
+        version = int(version_row[0]) if version_row is not None else -1
+        if version != cls.CURRENT_SCHEMA_VERSION:
+            raise RuntimeError(
+                f"Unsupported database schema {version}; "
+                f"expected {cls.CURRENT_SCHEMA_VERSION}."
+            )
+        try:
+            migration = connection.execute(
+                "SELECT version FROM schema_migrations ORDER BY version"
+            ).fetchall()
+        except sqlite3.DatabaseError as error:
+            raise RuntimeError("Database migration history is missing or invalid.") from error
+        versions = tuple(int(row[0]) for row in migration)
+        if versions != tuple(range(1, version + 1)):
+            raise RuntimeError("Database migration history does not match user_version.")
 
     def close(self) -> None:
         """Close the managed connection once."""
