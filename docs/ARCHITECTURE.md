@@ -7,7 +7,7 @@
 - `domain/fitment.py`: conservative bounding-box comparison.
 - `domain/catalog.py`: immutable records for vehicle platforms, propulsion units, transmissions, mounting points and named interfaces; deterministic interface-identity assessment.
 - `domain/measurement.py`: field-level values with explicit units, evidence, absolute uncertainty and immutable revision history; required-data readiness gate.
-- `infrastructure/persistence/sqlite.py`: SQLite schema migration v1, append-only measurement repository, consistent backup and validated atomic restore.
+- `infrastructure/persistence/sqlite.py`: SQLite schema migration v1, append-only measurement repository, consistent backup, validated atomic restore and all-or-nothing history import.\n- `infrastructure/persistence/measurement_json.py`: strict schema-v1 JSON export/import with deterministic ordering, duplicate-key rejection and domain-model validation.
 
 The domain layer has no GUI, network, database, CAD, or AI dependency. Infrastructure adapts persistence to domain records.
 
@@ -27,7 +27,7 @@ The required-data gate returns blocked when a required value is absent, review-r
 
 ## Persistence boundary
 
-SQLite is the initial local persistence adapter. Schema migrations are versioned through `PRAGMA user_version` and recorded in `schema_migrations`. Measurement revisions use a composite primary key and are inserted in an explicit immediate transaction. The repository rejects revision overwrites and gaps. This is a local single-process persistence foundation, not yet a synchronized multi-user database or a full audit/event system. File backups use SQLite's online backup API and are integrity/schema checked before atomic publication. Restore validates the source and stages it beside the destination before `os.replace`; callers must close all destination users first. WAL sidecars block replacement. This does not provide encryption-at-rest, backup scheduling, retention, off-site replication, or recovery-point guarantees.
+SQLite is the initial local persistence adapter. Schema migrations are versioned through `PRAGMA user_version` and recorded in `schema_migrations`. Measurement revisions use a composite primary key and are inserted in an explicit immediate transaction. The repository rejects revision overwrites and gaps. This is a local single-process persistence foundation, not yet a synchronized multi-user database or a full audit/event system. File backups use SQLite's online backup API and are integrity/schema checked before atomic publication. Restore validates the source and stages it beside the destination before `os.replace`; callers must close all destination users first. WAL sidecars block replacement. This does not provide encryption-at-rest, backup scheduling, retention, off-site replication, or recovery-point guarantees. Measurement histories can be exported as deterministic JSON schema v1. Import rejects unknown versions, extra/missing keys, duplicate JSON keys and duplicate field paths, and validates each datum through the domain models. Repository import is transactional and rejects any existing field path rather than merging or overwriting it.
 
 ## Interface assessment limits
 

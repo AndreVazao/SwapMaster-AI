@@ -313,6 +313,48 @@ class SQLiteMeasurementRepository:
             self._connection.rollback()
             raise
 
+
+    def import_histories(self, histories: tuple[MeasurementHistory, ...]) -> None:
+        """Insert complete histories atomically; never merge or overwrite existing fields."""
+        if not histories:
+            raise ValueError("At least one measurement history is required.")
+        field_paths = tuple(history.field_path for history in histories)
+        if len(field_paths) != len(set(field_paths)):
+            raise ValueError("Import contains duplicate field paths.")
+        try:
+            self._connection.execute("BEGIN IMMEDIATE")
+            for field_path in field_paths:
+                existing = self._connection.execute(
+                    "SELECT 1 FROM measurement_revisions WHERE field_path = ? LIMIT 1",
+                    (field_path,),
+                ).fetchone()
+                if existing is not None:
+                    raise RepositoryConflictError(
+                        f"Field {field_path!r} already exists; import does not overwrite."
+                    )
+            for history in histories:
+                for datum in history.revisions:
+                    self._connection.execute(
+                        """
+                        INSERT INTO measurement_revisions (
+                            field_path, revision, value, unit, evidence_level,
+                            evidence_source, evidence_method, evidence_notes,
+                            uncertainty, recorded_at, recorded_by, source_reference
+                        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                        """,
+                        (
+                            datum.field_path, datum.revision, datum.value, datum.unit.value,
+                            datum.evidence.level.value, datum.evidence.source,
+                            datum.evidence.method, datum.evidence.notes, datum.uncertainty,
+                            datum.recorded_at.isoformat() if datum.recorded_at else None,
+                            datum.recorded_by, datum.source_reference,
+                        ),
+                    )
+            self._connection.commit()
+        except Exception:
+            self._connection.rollback()
+            raise
+
     def get_history(self, field_path: str) -> MeasurementHistory | None:
         """Load all revisions for one field in ascending revision order."""
         rows = self._connection.execute(

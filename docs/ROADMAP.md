@@ -17,7 +17,7 @@ This roadmap is directional. An item is complete only when code, tests, document
 - [ ] Per-field source conflict resolution and audit events
 - [x] SQLite online backup and validated atomic restore (local file workflow)
 - [ ] Encryption-at-rest strategy, backup scheduling, retention and off-site recovery
-- [ ] Validated import/export format
+- [x] Strict versioned JSON export/import for measurement histories (schema v1, transactional no-overwrite import)
 
 ## Engineering workflows
 - [ ] Vehicle and powertrain catalogue with source traceability

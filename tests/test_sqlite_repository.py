@@ -226,3 +226,39 @@ def test_restore_rejects_destination_with_wal_sidecars(tmp_path) -> None:
         assert not destination.exists()
     finally:
         sidecar.unlink()
+
+
+def test_repository_imports_histories_atomically_without_overwriting() -> None:
+    from swapmaster.domain.measurement import MeasurementHistory
+
+    database = SQLiteDatabase(":memory:")
+    repository = SQLiteMeasurementRepository(database.connection)
+    existing = make_datum(500.0, field_path="vehicle.mass")
+    repository.save(existing)
+    incoming = MeasurementHistory(
+        "vehicle.engine_bay.length",
+        (make_datum(520.0, field_path="vehicle.engine_bay.length"),),
+    )
+    conflicting = MeasurementHistory("vehicle.mass", (existing,))
+    with pytest.raises(RepositoryConflictError, match="already exists"):
+        repository.import_histories((incoming, conflicting))
+    assert repository.get_history("vehicle.engine_bay.length") is None
+    assert repository.get_latest("vehicle.mass") == existing
+    repository.import_histories((incoming,))
+    assert repository.get_history("vehicle.engine_bay.length") == incoming
+    database.close()
+
+
+def test_repository_import_rejects_duplicate_and_empty_batches() -> None:
+    from swapmaster.domain.measurement import MeasurementHistory
+
+    database = SQLiteDatabase(":memory:")
+    repository = SQLiteMeasurementRepository(database.connection)
+    datum = make_datum(520.0)
+    history = MeasurementHistory(datum.field_path, (datum,))
+    with pytest.raises(ValueError, match="At least one"):
+        repository.import_histories(())
+    with pytest.raises(ValueError, match="duplicate field paths"):
+        repository.import_histories((history, history))
+    assert repository.list_field_paths() == ()
+    database.close()
