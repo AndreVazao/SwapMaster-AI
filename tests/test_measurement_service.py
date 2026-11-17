@@ -3,7 +3,6 @@ from datetime import UTC, datetime
 import pytest
 
 from swapmaster.application.measurement_service import MeasurementService
-
 from swapmaster.domain.evidence import Evidence, EvidenceLevel
 from swapmaster.domain.measurement import (
     DataReadiness,
