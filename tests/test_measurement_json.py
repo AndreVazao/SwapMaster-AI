@@ -100,7 +100,7 @@ def test_import_rejects_duplicate_field_paths() -> None:
 
 def test_import_rejects_naive_timestamp() -> None:
     payload = export_measurement_histories((make_history(),)).replace(
-        '"2026-11-17T06:00:00+00:00"', '""'
+        '"2026-11-17T06:00:00+00:00"', '"2026-11-17T06:00:00"'
     )
     with pytest.raises(ValueError, match="timezone-aware"):
         import_measurement_histories(payload)
@@ -114,7 +114,7 @@ def test_export_rejects_duplicate_histories() -> None:
 
 def test_import_rejects_empty_timestamp_instead_of_treating_it_as_missing() -> None:
     payload = export_measurement_histories((make_history(),)).replace(
-        "2026-11-17T06:00:00+00:00", '""'
+        '"2026-11-17T06:00:00+00:00"', '""'
     )
     with pytest.raises(ValueError, match="Invalid isoformat string"):
         import_measurement_histories(payload)
