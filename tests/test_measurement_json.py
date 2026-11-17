@@ -32,7 +32,7 @@ def test_export_import_round_trip_preserves_measurement_history() -> None:
     original = make_history()
     encoded = export_measurement_histories((original,))
     assert import_measurement_histories(encoded) == (original,)
-    assert encoded.endswith("\\n")
+    assert encoded.endswith("\n")
     assert FORMAT_NAME in encoded
 
 
@@ -74,7 +74,7 @@ def test_import_rejects_extra_keys_and_non_finite_numbers() -> None:
     payload = export_measurement_histories((make_history(),))
     with pytest.raises(ValueError, match="exactly these keys"):
         import_measurement_histories(payload.replace(
-            '"format":', '"unexpected": true,\\n  "format":', 1
+            '"format":', '"unexpected": true,\n  "format":', 1
         ))
     with pytest.raises(ValueError, match="Non-finite JSON number"):
         import_measurement_histories(payload.replace('"value": 520.0', '"value": NaN'))
@@ -90,9 +90,9 @@ def test_import_rejects_boolean_as_numeric_value() -> None:
 
 def test_import_rejects_duplicate_field_paths() -> None:
     document = export_measurement_histories((make_history(),))
-    history_object = document.split('"histories": [\\n', 1)[1].rsplit('\\n  ]', 1)[0]
+    history_object = document.split('"histories": [\n', 1)[1].rsplit('\n  ]', 1)[0]
     duplicated = document.replace(
-        history_object, history_object + ',\\n' + history_object, 1
+        history_object, history_object + ',\n' + history_object, 1
     )
     with pytest.raises(ValueError, match="Duplicate field path"):
         import_measurement_histories(duplicated)
