@@ -2,6 +2,8 @@ from datetime import UTC, datetime
 
 import pytest
 
+from swapmaster.application.measurement_service import MeasurementService
+
 from swapmaster.domain.evidence import Evidence, EvidenceLevel
 from swapmaster.domain.measurement import (
     DataReadiness,
@@ -13,7 +15,6 @@ from swapmaster.infrastructure.persistence.sqlite import (
     SQLiteDatabase,
     SQLiteMeasurementRepository,
 )
-from swapmaster.application.measurement_service import MeasurementService
 
 CONFIRMED = Evidence(EvidenceLevel.CONFIRMED, source="Calibrated workshop report")
 
