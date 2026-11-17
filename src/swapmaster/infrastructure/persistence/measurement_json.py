@@ -130,15 +130,27 @@ def import_measurement_histories(payload: str) -> tuple[MeasurementHistory, ...]
                 if datum["field_path"] != field_path:
                     raise ValueError(f"{datum_label}.field_path does not match its history.")
                 value = datum["value"]
-                if value is not None and (
-                    type(value) not in (int, float) or not isfinite(value)
-                ):
-                    raise ValueError(f"{datum_label}.value must be a finite number or null.")
+                if value is not None:
+                    if isinstance(value, bool) or not isinstance(value, (int, float)):
+                        raise ValueError(
+                            f"{datum_label}.value must be a finite number or null."
+                        )
+                    if not isfinite(value):
+                        raise ValueError(
+                            f"{datum_label}.value must be a finite number or null."
+                        )
                 uncertainty = datum["uncertainty"]
-                if uncertainty is not None and (
-                    type(uncertainty) not in (int, float) or not isfinite(uncertainty)
-                ):
-                    raise ValueError(f"{datum_label}.uncertainty must be a finite number or null.")
+                if uncertainty is not None:
+                    if isinstance(uncertainty, bool) or not isinstance(
+                        uncertainty, (int, float)
+                    ):
+                        raise ValueError(
+                            f"{datum_label}.uncertainty must be a finite number or null."
+                        )
+                    if not isfinite(uncertainty):
+                        raise ValueError(
+                            f"{datum_label}.uncertainty must be a finite number or null."
+                        )
                 revision = datum["revision"]
                 if type(revision) is not int:
                     raise ValueError(f"{datum_label}.revision must be an integer.")
