@@ -20,7 +20,7 @@ This roadmap is directional. An item is complete only when code, tests, document
 - [x] Strict versioned JSON export/import for measurement histories (schema v1, transactional no-overwrite import)
 
 ## Engineering workflows
-- [ ] Vehicle and powertrain catalogue with source traceability
+- [x] Initial application service for measurement recording, readiness and JSON interchange\n- [ ] Vehicle and powertrain catalogue with source traceability
 - [ ] Multi-constraint packaging and interface checks
 - [ ] EV conversion planning and high-voltage safety checklist
 - [ ] Measurement and 3D scan import workflow

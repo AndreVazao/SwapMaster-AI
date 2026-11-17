@@ -33,7 +33,7 @@ SQLite is the initial local persistence adapter. Schema migrations are versioned
 
 A matching interface kind and identifier is only a preliminary identity match. It does not establish dimensional interchangeability, tolerances, bolt pattern, material suitability, load capacity, fastener specification, alignment, or safety. A positive result must never be treated as a fitment approval.
 
-## Planned boundaries
+## Application service boundary\n\n`application/measurement_service.py` exposes measurement recording, history retrieval, readiness assessment and JSON import/export through a repository protocol. The desktop presentation should call this service rather than SQLite directly. Domain validation remains authoritative; repository conflicts are surfaced to the caller and import is all-or-nothing.\n\n## Planned boundaries
 
 1. **Presentation** — desktop UI, localization, workflows and accessibility.
 2. **Application services** — use cases, orchestration, approvals and audit events.
