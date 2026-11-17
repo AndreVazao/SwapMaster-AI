@@ -110,3 +110,11 @@ def test_export_rejects_duplicate_histories() -> None:
     history = make_history()
     with pytest.raises(ValueError, match="duplicate field paths"):
         export_measurement_histories((history, history))
+
+
+def test_import_rejects_empty_timestamp_instead_of_treating_it_as_missing() -> None:
+    payload = export_measurement_histories((make_history(),)).replace(
+        "2026-11-17T06:00:00+00:00", '""'
+    )
+    with pytest.raises(ValueError, match="Invalid isoformat string"):
+        import_measurement_histories(payload)
