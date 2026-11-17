@@ -181,10 +181,9 @@ def import_measurement_histories(payload: str) -> tuple[MeasurementHistory, ...]
                         uncertainty=float(uncertainty) if uncertainty is not None else None,
                         revision=revision,
                         recorded_at=(
-,
                             datetime.fromisoformat(timestamp)
                             if timestamp is not None else None
-                        )
+                        ),
                         recorded_by=_optional_text(datum["recorded_by"], "recorded_by"),
                         source_reference=_optional_text(
                             datum["source_reference"], "source_reference"
