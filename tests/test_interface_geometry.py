@@ -1,12 +1,12 @@
 import pytest
 
+from swapmaster.domain.evidence import Evidence, EvidenceLevel
 from swapmaster.domain.interface_geometry import (
     GeometryMatchStatus,
     HoleCentre,
     InterfaceGeometry,
     assess_interface_geometry,
 )
-from swapmaster.domain.evidence import Evidence, EvidenceLevel
 
 
 CONFIRMED = Evidence(EvidenceLevel.CONFIRMED, source="measured inspection drawing")
