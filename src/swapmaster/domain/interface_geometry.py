@@ -145,7 +145,8 @@ def assess_interface_geometry(
         GeometryMatchStatus.PRELIMINARY_GEOMETRY_MATCH,
         (
             "Measured hole centres, nominal diameters and supplied pilot diameter match.",
-            "Crankshaft/input-shaft alignment, axial stack, clutch, starter, strength and loads remain unverified.",
+            "Crankshaft/input-shaft alignment, axial stack, clutch, starter, "
+            "strength and loads remain unverified.",
         ),
         tolerance_mm,
     )

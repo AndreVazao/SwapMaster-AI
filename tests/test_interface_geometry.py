@@ -1,12 +1,12 @@
 import pytest
 
-from swapmaster.domain.evidence import Evidence, EvidenceLevel
 from swapmaster.domain.interface_geometry import (
     GeometryMatchStatus,
     HoleCentre,
     InterfaceGeometry,
     assess_interface_geometry,
 )
+from swapmaster.domain.evidence import Evidence, EvidenceLevel
 
 
 CONFIRMED = Evidence(EvidenceLevel.CONFIRMED, source="measured inspection drawing")
@@ -51,7 +51,8 @@ def test_missing_pilot_measurement_blocks_match() -> None:
     target = InterfaceGeometry(
         "engine-to-gearbox", "bellhousing-face-A", geometry().holes, None, CONFIRMED
     )
-    assert assess_interface_geometry(geometry(), target).status is GeometryMatchStatus.INSUFFICIENT_DATA
+    result = assess_interface_geometry(geometry(), target)
+    assert result.status is GeometryMatchStatus.INSUFFICIENT_DATA
 
 
 def test_estimated_geometry_requires_review() -> None:
