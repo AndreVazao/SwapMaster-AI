@@ -39,3 +39,10 @@ A nominal bellhousing pattern match is only one condition. A complete assessment
 - electronics, controls, emissions, braking, vehicle dynamics and legal approval.
 
 No single result from this module should be interpreted as a recommendation to manufacture or install a component.
+
+
+## Measured interface geometry (incremental extension)
+
+A separate geometric screening record now stores measured 2D bolt-hole centres, nominal hole diameters, pilot diameter, named coordinate frame, and evidence. Two patterns are compared only when their frame identifiers match; the comparison does not infer a rotation or translation.
+
+See [INTERFACE_GEOMETRY.md](INTERFACE_GEOMETRY.md) for the required measurement discipline and interpretation of each result. A preliminary geometry match is not proof of concentricity, axial engagement, clutch/flywheel/starter compatibility, structural strength, or a manufacturable adapter.
