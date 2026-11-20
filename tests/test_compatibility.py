@@ -108,8 +108,15 @@ def test_missing_torque_data_is_insufficient():
 
 
 def test_estimated_torque_data_requires_review():
+    bay = Envelope3D(800, 700, 600, CONFIRMED)
+    engine_envelope = Envelope3D(700, 600, 500, CONFIRMED)
     result = assess_powertrain_candidate(
-        *make_candidate(engine_evidence=ESTIMATED, gearbox_evidence=ESTIMATED)
+        *make_candidate(
+            bay=bay,
+            engine_envelope=engine_envelope,
+            engine_evidence=ESTIMATED,
+            gearbox_evidence=ESTIMATED,
+        )
     )
     assert result.status is CompatibilityStatus.ENGINEERING_REVIEW_REQUIRED
     criterion = next(c for c in result.criteria if c.name == "input_torque_limit")
