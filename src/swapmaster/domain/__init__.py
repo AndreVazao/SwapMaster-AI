@@ -1,10 +1,3 @@
-from swapmaster.domain.compatibility import (
-    CompatibilityAssessment,
-    CompatibilityStatus,
-    CriterionAssessment,
-    CriterionStatus,
-    assess_powertrain_candidate,
-)
 """Core domain models and deterministic engineering rules."""
 
 from swapmaster.domain.catalog import (
@@ -19,6 +12,13 @@ from swapmaster.domain.catalog import (
     VehiclePlatform,
     assess_interface_compatibility,
 )
+from swapmaster.domain.compatibility import (
+    CompatibilityAssessment,
+    CompatibilityStatus,
+    CriterionAssessment,
+    CriterionStatus,
+    assess_powertrain_candidate,
+)
 from swapmaster.domain.dimensions import Envelope3D
 from swapmaster.domain.evidence import Evidence, EvidenceLevel
 from swapmaster.domain.fitment import FitmentAssessment, FitmentStatus, assess_envelope
@@ -32,6 +32,10 @@ from swapmaster.domain.measurement import (
 )
 
 __all__ = [
+    "CompatibilityAssessment",
+    "CompatibilityStatus",
+    "CriterionAssessment",
+    "CriterionStatus",
     "DataReadiness",
     "DataReadinessAssessment",
     "EngineeringDatum",
@@ -54,4 +58,5 @@ __all__ = [
     "assess_envelope",
     "assess_required_measurements",
     "assess_interface_compatibility",
+    "assess_powertrain_candidate",
 ]
