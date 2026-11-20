@@ -40,3 +40,11 @@ This roadmap is directional. An item is complete only when code, tests, document
 - [ ] Security and dependency review
 - [ ] Engineering validation of every published calculation
 - [ ] Legal, privacy and licensing review
+
+
+## Compatibility screening increment
+
+- Deterministic first-pass assessment for engine-bay envelope, bellhousing identity and declared torque limit.
+- Missing evidence blocks a positive screening result; known mismatches mark the combination incompatible.
+- Mounting geometry and transmission packaging are explicitly not assessed and force engineering review.
+- This is not a fitment, safety, roadworthiness or manufacturing approval.

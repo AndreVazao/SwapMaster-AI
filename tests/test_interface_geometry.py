@@ -8,7 +8,6 @@ from swapmaster.domain.interface_geometry import (
     assess_interface_geometry,
 )
 
-
 CONFIRMED = Evidence(EvidenceLevel.CONFIRMED, source="measured inspection drawing")
 ESTIMATED = Evidence(EvidenceLevel.ESTIMATED, method="unverified estimate")
 

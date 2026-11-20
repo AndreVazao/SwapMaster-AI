@@ -53,3 +53,8 @@ AI can propose research, data changes, calculations to review, or code changes. 
 ## CAD and scanning roadmap
 
 3D scanning and CAD generation are not implemented. Future work must preserve coordinate systems, scale calibration, reference points, uncertainty, source meshes, and review history. Generated parts must be marked NOT FOR MANUFACTURE until independent engineering validation.
+
+
+### Compatibility screening
+
+The domain-level `assess_powertrain_candidate` composes existing envelope and interface assessments with a torque-limit check. It returns named criterion results and a conservative aggregate status. Checks not yet implemented (mounting transformations and transmission packaging) are represented as `NOT_ASSESSED`, which prevents a positive candidate result. The service has no database, network or UI dependencies.

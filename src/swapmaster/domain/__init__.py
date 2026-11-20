@@ -1,3 +1,10 @@
+from swapmaster.domain.compatibility import (
+    CompatibilityAssessment,
+    CompatibilityStatus,
+    CriterionAssessment,
+    CriterionStatus,
+    assess_powertrain_candidate,
+)
 """Core domain models and deterministic engineering rules."""
 
 from swapmaster.domain.catalog import (
