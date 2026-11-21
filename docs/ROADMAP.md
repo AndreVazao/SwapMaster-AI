@@ -48,3 +48,39 @@ This roadmap is directional. An item is complete only when code, tests, document
 - Missing evidence blocks a positive screening result; known mismatches mark the combination incompatible.
 - Mounting geometry and transmission packaging are explicitly not assessed and force engineering review.
 - This is not a fitment, safety, roadworthiness or manufacturing approval.
+
+
+## CAD, visualization and manufacturing outputs (product requirement)
+
+The product goal is to support the user from engine/vehicle selection through preliminary design of engine mounts, bellhousing adapters, plates, spacers and related swap components, with reviewable visualization and multi-format technical output. This is a roadmap requirement, not an implemented capability.
+
+### Planned output formats
+- **PDF**: readable technical drawing/report with orthographic views, sections, dimensions, tolerances, materials, notes, revision, evidence and engineering status.
+- **SVG**: vector 2D profiles and presentation geometry where suitable; not a substitute for process-specific CAM validation.
+- **DXF**: 2D manufacturing exchange for compatible CAD/CAM, laser/plasma/CNC workflows; validate units, scale, layers, kerf, nesting and machine/process constraints separately.
+- **STEP (.step/.stp)**: interoperable solid model for downstream CAD inspection and editing.
+- **STL / 3MF**: mesh exports for visualization/prototyping; never imply printed parts are structurally suitable merely because the mesh is valid.
+- **Project JSON**: parameters, geometry, references, evidence/provenance, units, uncertainty, revisions and approvals.
+
+### Planned CAD workflow
+1. Gather verified engine, gearbox and vehicle data; ask for missing critical measurements.
+2. Establish coordinate frames and calibrated scan/measurement references.
+3. Create parametric design templates for mounts, adapter plates, bellhousing adapters and spacers.
+4. Assemble the swap in an interactive 3D viewer; check placement, alignment, clearances and interference.
+5. Run geometry and design-rule checks; structural adequacy remains a separate review/analysis scope.
+6. Generate drawings and export formats from a single versioned source model.
+7. Package outputs with revision, provenance, validation report and human approval record.
+
+### Roadmap status
+- [ ] Mounting-point coordinate frames and validated transformations
+- [ ] Installed powertrain placement / packaging model
+- [ ] 3D scan/mesh import, scale calibration and datum registration
+- [ ] CAD backend selection and parametric model abstraction
+- [ ] Parametric mount and adapter/bellhousing templates
+- [ ] Interactive 3D assembly viewer and interference checks
+- [ ] Technical drawing generation (PDF)
+- [ ] 2D exports (SVG and DXF) with process-specific checks
+- [ ] Solid/mesh exports (STEP, STL, 3MF)
+- [ ] Revision-controlled engineering package and approval gate
+
+**Release gate:** all generated design/drawing/mesh outputs remain **PRELIMINARY — NOT FOR MANUFACTURE — ENGINEERING REVIEW REQUIRED** until an explicit documented engineering review is recorded. Automated geometric checks are not structural validation, alignment certification, vehicle approval or manufacturing release.

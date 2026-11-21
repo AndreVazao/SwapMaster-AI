@@ -58,3 +58,22 @@ AI can propose research, data changes, calculations to review, or code changes. 
 ### Compatibility screening
 
 The domain-level `assess_powertrain_candidate` composes existing envelope and interface assessments with a torque-limit check. It returns named criterion results and a conservative aggregate status. Checks not yet implemented (mounting transformations and transmission packaging) are represented as `NOT_ASSESSED`, which prevents a positive candidate result. The service has no database, network or UI dependencies.
+
+
+## CAD design, visualization and output package (planned)
+
+The target product is not merely a fitment checker. It should help design preliminary engine mounts, bellhousing/adapter plates, spacers and related swap components from traceable vehicle/powertrain data, then visualize the installed assembly and export a coherent revision-controlled package. No CAD kernel, 3D viewer, scan workflow or manufacturing export is implemented yet.
+
+### Source-of-truth model
+A future parametric model must be the source for all outputs, avoiding independent/manual divergence between PDF, SVG, DXF, STEP and STL/3MF. Project data must retain units, coordinate frames, constraints, source references, measurement methods, uncertainty, revision and approval state.
+
+### Planned export responsibilities
+- PDF: dimensioned technical drawings/report, orthographic/section views, tolerance/material notes, revision and evidence summary.
+- SVG: vector geometry/presentation and supported 2D profiles.
+- DXF: CAD/CAM 2D interchange; require process checks for scale, units, layers, tool/kerf and machine-specific conditions.
+- STEP: interoperable solid model.
+- STL/3MF: tessellated model for prototype/visualization, not a structural-use endorsement.
+- JSON: parameterized source data and provenance for reproducibility.
+
+### Engineering boundaries
+Interactive 3D review should check packaging, clearances, hole patterns, reference frames, alignment and collision risks. Mount structural strength, fasteners, welds, fatigue, material/process suitability, vibration, thermal/electrical safety and vehicle legality are separate engineering checks and cannot be inferred from geometric fit. Export packages should include revision identity and status labels; release for manufacture must be human approval-gated and evidence-backed.
