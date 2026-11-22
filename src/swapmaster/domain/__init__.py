@@ -22,7 +22,7 @@ from swapmaster.domain.compatibility import (
 from swapmaster.domain.dimensions import Envelope3D
 from swapmaster.domain.evidence import Evidence, EvidenceLevel
 from swapmaster.domain.fitment import FitmentAssessment, FitmentStatus, assess_envelope
-from swapmaster.domain.measurement import (
+from swapmaster.domain.mounting_geometry import (\n    MountingGeometryAssessment,\n    MountingGeometryStatus,\n    assess_mounting_geometry,\n)\nfrom swapmaster.domain.measurement import (
     DataReadiness,
     DataReadinessAssessment,
     EngineeringDatum,
@@ -50,13 +50,13 @@ __all__ = [
     "MeasurementHistory",
     "MeasurementUnit",
     "MechanicalInterface",
-    "MountingPoint",
+    "MountingGeometryAssessment",\n    "MountingGeometryStatus",\n    "MountingPoint",
     "PowerUnit",
     "PropulsionType",
     "Transmission",
     "VehiclePlatform",
     "assess_envelope",
     "assess_required_measurements",
-    "assess_interface_compatibility",
+    "assess_interface_compatibility",\n    "assess_mounting_geometry",
     "assess_powertrain_candidate",
 ]

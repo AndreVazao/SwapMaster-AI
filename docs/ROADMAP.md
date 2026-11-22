@@ -72,7 +72,7 @@ The product goal is to support the user from engine/vehicle selection through pr
 7. Package outputs with revision, provenance, validation report and human approval record.
 
 ### Roadmap status
-- [ ] Mounting-point coordinate frames and validated transformations
+- [x] Conservative mounting-point set comparison (same explicitly registered datum; no transforms inferred)\n- [ ] Coordinate transformations between vehicle/engine/transmission frames with validated registration
 - [ ] Installed powertrain placement / packaging model
 - [ ] 3D scan/mesh import, scale calibration and datum registration
 - [ ] CAD backend selection and parametric model abstraction
@@ -84,3 +84,8 @@ The product goal is to support the user from engine/vehicle selection through pr
 - [ ] Revision-controlled engineering package and approval gate
 
 **Release gate:** all generated design/drawing/mesh outputs remain **PRELIMINARY — NOT FOR MANUFACTURE — ENGINEERING REVIEW REQUIRED** until an explicit documented engineering review is recorded. Automated geometric checks are not structural validation, alignment certification, vehicle approval or manufacturing release.
+
+
+## Mounting-point geometry screening increment
+
+Implemented comparison of two named 3D mounting-point sets only after caller explicitly declares a common registered datum and both sets use that frame. Coordinate tolerance is axis-wise in millimetres. Identifier correspondence is checked but coordinates must also match. Missing data, frame mismatch, point-count/ID mismatch and geometry mismatch are explicit outcomes. Confirmed geometry yields only a preliminary geometry match; non-confirmed evidence forces review. No coordinate transformations, structural/load-path assessment, fastener/weld design or dynamic-clearance checks are implemented.

@@ -77,3 +77,8 @@ A future parametric model must be the source for all outputs, avoiding independe
 
 ### Engineering boundaries
 Interactive 3D review should check packaging, clearances, hole patterns, reference frames, alignment and collision risks. Mount structural strength, fasteners, welds, fatigue, material/process suitability, vibration, thermal/electrical safety and vehicle legality are separate engineering checks and cannot be inferred from geometric fit. Export packages should include revision identity and status labels; release for manufacture must be human approval-gated and evidence-backed.
+
+
+## Mounting geometry screening
+
+`domain/mounting_geometry.py` compares two 3D `MountingPoint` sets by identifier and axis-wise coordinate tolerance in millimetres. Both must already be registered to an explicitly declared shared datum; the service does not infer transforms or align point clouds. It rejects missing sets, frame mismatch, unequal point counts/IDs, or coordinate mismatch, and requires review for unconfirmed evidence. A preliminary match only establishes measured positional correspondence within tolerance, not load capacity, mount design, fatigue, vibration, fasteners/welds or safety.

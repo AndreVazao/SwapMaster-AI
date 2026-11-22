@@ -41,3 +41,8 @@ Planned formats include PDF technical drawings, SVG, DXF, STEP and STL/3MF, with
 - STEP is an exchange model; STL/3MF are meshes and are not proof of suitability for structural automotive use.
 - Every preliminary output must carry revision and status: **PRELIMINARY — NOT FOR MANUFACTURE — ENGINEERING REVIEW REQUIRED**.
 - Only documented, qualified human review may authorize release, and the approval record must be traceable to the exact model revision and output package.
+
+
+## Mounting-point comparison boundary
+
+Mount-point comparisons are permitted only when both point sets are already registered to the same explicitly named coordinate datum. The software does not infer rotations, translations, best-fit alignments or transformations in this increment. A geometric match is preliminary and must not be interpreted as mount design or proof of structural adequacy, load paths, fasteners, welds, fatigue, vibration, dynamic clearance or safety.
