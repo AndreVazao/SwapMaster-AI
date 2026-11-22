@@ -22,6 +22,11 @@ from swapmaster.domain.compatibility import (
 from swapmaster.domain.dimensions import Envelope3D
 from swapmaster.domain.evidence import Evidence, EvidenceLevel
 from swapmaster.domain.fitment import FitmentAssessment, FitmentStatus, assess_envelope
+from swapmaster.domain.mounting_geometry import (
+    MountingGeometryAssessment,
+    MountingGeometryStatus,
+    assess_mounting_geometry,
+)
 from swapmaster.domain.measurement import (
     DataReadiness,
     DataReadinessAssessment,
@@ -29,11 +34,6 @@ from swapmaster.domain.measurement import (
     MeasurementHistory,
     MeasurementUnit,
     assess_required_measurements,
-)
-from swapmaster.domain.mounting_geometry import (
-    MountingGeometryAssessment,
-    MountingGeometryStatus,
-    assess_mounting_geometry,
 )
 
 __all__ = [

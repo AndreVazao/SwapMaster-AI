@@ -19,11 +19,10 @@ def points(offset: float = 0.0, evidence: Evidence = CONFIRMED, frame: str = "co
     )
 
 
-def assess(first=None, second=None, frame="common-datum", tolerance=1.0):
-    if first is None:
-        first = points()
-    if second is None:
-        second = points()
+DEFAULT_POINTS = points()
+
+
+def assess(first=DEFAULT_POINTS, second=DEFAULT_POINTS, frame="common-datum", tolerance=1.0):
     return assess_mounting_geometry(
         first, second, common_coordinate_frame=frame, tolerance_mm=tolerance
     )
