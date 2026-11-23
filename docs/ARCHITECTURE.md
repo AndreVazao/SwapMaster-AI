@@ -82,3 +82,8 @@ Interactive 3D review should check packaging, clearances, hole patterns, referen
 ## Mounting geometry screening
 
 `domain/mounting_geometry.py` compares two 3D `MountingPoint` sets by identifier and axis-wise coordinate tolerance in millimetres. Both must already be registered to an explicitly declared shared datum; the service does not infer transforms or align point clouds. It rejects missing sets, frame mismatch, unequal point counts/IDs, or coordinate mismatch, and requires review for unconfirmed evidence. A preliminary match only establishes measured positional correspondence within tolerance, not load capacity, mount design, fatigue, vibration, fasteners/welds or safety.
+
+
+## Coordinate transformations
+
+`domain/coordinate_transform.py` provides explicit rigid transforms between named frames. Coordinates and translation use millimetres; rotations are active, right-handed 3x3 matrices applied to column vectors using `p_target = R * p_source + t`. Matrices must be orthonormal with determinant +1. Inversion uses the transpose and translated inverse; composition is allowed only when frame IDs connect. Evidence is retained and review-required evidence is not upgraded. This is not scan registration, best-fit alignment, uncertainty propagation or a physical alignment certification. Callers must establish and document the transform from measured/calibrated data; no automatic transform is inferred.

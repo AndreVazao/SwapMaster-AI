@@ -72,7 +72,7 @@ The product goal is to support the user from engine/vehicle selection through pr
 7. Package outputs with revision, provenance, validation report and human approval record.
 
 ### Roadmap status
-- [x] Conservative mounting-point set comparison (same explicitly registered datum; no transforms inferred)\n- [ ] Coordinate transformations between vehicle/engine/transmission frames with validated registration
+- [x] Conservative mounting-point set comparison (same explicitly registered datum; no transforms inferred)\n- [x] Explicit rigid coordinate transforms between named frames; measured registration workflow remains pending
 - [ ] Installed powertrain placement / packaging model
 - [ ] 3D scan/mesh import, scale calibration and datum registration
 - [ ] CAD backend selection and parametric model abstraction
