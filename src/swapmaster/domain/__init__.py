@@ -12,6 +12,7 @@ from swapmaster.domain.catalog import (
     VehiclePlatform,
     assess_interface_compatibility,
 )
+from swapmaster.domain.coordinate_transform import CoordinateTransform
 from swapmaster.domain.compatibility import (
     CompatibilityAssessment,
     CompatibilityStatus,
@@ -37,6 +38,7 @@ from swapmaster.domain.mounting_geometry import (
 )
 
 __all__ = [
+    "CoordinateTransform",
     "CompatibilityAssessment",
     "CompatibilityStatus",
     "CriterionAssessment",
