@@ -1,4 +1,5 @@
 """Tests for explicit, validated coordinate-frame transformations."""
+
 from math import isclose
 
 import pytest
@@ -11,7 +12,13 @@ IDENTITY = ((1.0, 0.0, 0.0), (0.0, 1.0, 0.0), (0.0, 0.0, 1.0))
 ROT_Z_90 = ((0.0, -1.0, 0.0), (1.0, 0.0, 0.0), (0.0, 0.0, 1.0))
 
 
-def make_transform(source="engine", target="vehicle", rotation=IDENTITY, translation=(10.0, 20.0, 30.0), evidence=CONFIRMED):
+def make_transform(
+    source="engine",
+    target="vehicle",
+    rotation=IDENTITY,
+    translation=(10.0, 20.0, 30.0),
+    evidence=CONFIRMED,
+):
     return CoordinateTransform(source, target, rotation, translation, evidence)
 
 
@@ -20,15 +27,23 @@ def test_translation_applies_in_millimetres():
 
 
 def test_rotation_uses_active_right_handed_column_vector_convention():
-    result = make_transform(rotation=ROT_Z_90, translation=(0.0, 0.0, 0.0)).apply((1.0, 0.0, 0.0))
-    assert all(isclose(a, b, abs_tol=1e-9) for a, b in zip(result, (0.0, 1.0, 0.0)))
+    result = make_transform(
+        rotation=ROT_Z_90, translation=(0.0, 0.0, 0.0)
+    ).apply((1.0, 0.0, 0.0))
+    assert all(
+        isclose(a, b, abs_tol=1e-9)
+        for a, b in zip(result, (0.0, 1.0, 0.0), strict=True)
+    )
 
 
 def test_inverse_round_trip_recovers_original_point():
     original = (12.5, -8.0, 44.0)
     forward = make_transform(rotation=ROT_Z_90)
     recovered = forward.inverse().apply(forward.apply(original))
-    assert all(isclose(a, b, abs_tol=1e-9) for a, b in zip(recovered, original))
+    assert all(
+        isclose(a, b, abs_tol=1e-9)
+        for a, b in zip(recovered, original, strict=True)
+    )
 
 
 def test_composition_matches_sequential_application():
@@ -37,7 +52,10 @@ def test_composition_matches_sequential_application():
     point = (2.0, 3.0, 4.0)
     actual = first.then(second).apply(point)
     expected = second.apply(first.apply(point))
-    assert all(isclose(a, b, abs_tol=1e-9) for a, b in zip(actual, expected))
+    assert all(
+        isclose(a, b, abs_tol=1e-9)
+        for a, b in zip(actual, expected, strict=True)
+    )
 
 
 def test_composition_rejects_disconnected_frames():
