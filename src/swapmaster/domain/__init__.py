@@ -1,0 +1,72 @@
+"""Core domain models and deterministic engineering rules."""
+
+from swapmaster.domain.catalog import (
+    InterfaceAssessment,
+    InterfaceKind,
+    InterfaceStatus,
+    MechanicalInterface,
+    MountingPoint,
+    PowerUnit,
+    PropulsionType,
+    Transmission,
+    VehiclePlatform,
+    assess_interface_compatibility,
+)
+from swapmaster.domain.compatibility import (
+    CompatibilityAssessment,
+    CompatibilityStatus,
+    CriterionAssessment,
+    CriterionStatus,
+    assess_powertrain_candidate,
+)
+from swapmaster.domain.coordinate_transform import CoordinateTransform
+from swapmaster.domain.dimensions import Envelope3D
+from swapmaster.domain.evidence import Evidence, EvidenceLevel
+from swapmaster.domain.fitment import FitmentAssessment, FitmentStatus, assess_envelope
+from swapmaster.domain.measurement import (
+    DataReadiness,
+    DataReadinessAssessment,
+    EngineeringDatum,
+    MeasurementHistory,
+    MeasurementUnit,
+    assess_required_measurements,
+)
+from swapmaster.domain.mounting_geometry import (
+    MountingGeometryAssessment,
+    MountingGeometryStatus,
+    assess_mounting_geometry,
+)
+
+__all__ = [
+    "CoordinateTransform",
+    "CompatibilityAssessment",
+    "CompatibilityStatus",
+    "CriterionAssessment",
+    "CriterionStatus",
+    "DataReadiness",
+    "DataReadinessAssessment",
+    "EngineeringDatum",
+    "Envelope3D",
+    "Evidence",
+    "EvidenceLevel",
+    "FitmentAssessment",
+    "FitmentStatus",
+    "InterfaceAssessment",
+    "InterfaceKind",
+    "InterfaceStatus",
+    "MeasurementHistory",
+    "MeasurementUnit",
+    "MechanicalInterface",
+    "MountingGeometryAssessment",
+    "MountingGeometryStatus",
+    "MountingPoint",
+    "PowerUnit",
+    "PropulsionType",
+    "Transmission",
+    "VehiclePlatform",
+    "assess_envelope",
+    "assess_required_measurements",
+    "assess_interface_compatibility",
+    "assess_mounting_geometry",
+    "assess_powertrain_candidate",
+]
