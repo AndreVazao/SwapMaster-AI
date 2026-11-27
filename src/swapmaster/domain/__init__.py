@@ -12,7 +12,6 @@ from swapmaster.domain.catalog import (
     VehiclePlatform,
     assess_interface_compatibility,
 )
-from swapmaster.domain.coordinate_transform import CoordinateTransform
 from swapmaster.domain.compatibility import (
     CompatibilityAssessment,
     CompatibilityStatus,
@@ -20,6 +19,7 @@ from swapmaster.domain.compatibility import (
     CriterionStatus,
     assess_powertrain_candidate,
 )
+from swapmaster.domain.coordinate_transform import CoordinateTransform
 from swapmaster.domain.dimensions import Envelope3D
 from swapmaster.domain.evidence import Evidence, EvidenceLevel
 from swapmaster.domain.fitment import FitmentAssessment, FitmentStatus, assess_envelope
